@@ -1,0 +1,30 @@
+****************************************************************
+Description: Door Locker Security System  
+Date       : 11/2023
+****************************************************************
+Project Overview :
+1) The system checks if a password was created before and if not it asks the user to create one.
+2) The password is saved and will not be lost even if the power is cut off.
+3) The main menu is always shown on the LCD waiting for the user request (open door / change password).
+4) To activate the request the system asks the user for the password.
+5) If the inserted password is correct then the request is activated 
+ -Open Door: motor takes 15 sec to unlock the Door, then the door is opened for 3 seconds and then the motor will take 15 sec to lock the door again.
+ -Change password : requires the user to enter the new password twice to save it .
+6) If the user inserted the password 3 consecutive wrong times the alarm mode ⚠ 📢 is activated for 60 sec and the keypad will be blocked during this time 
+    then the system returns to the main menu again waiting for a request.
+ 
+Project Specifications :
+Two atmega32 microcontrollers (HMI_ ECU & Control_ECU) with frequency 8 Mhz.
+1) HMI: is just responsible for interaction with the user just take inputs through keypad and display messages on the LCD.
+2) Control_ECU: is responsible for all the processing and decisions in the system like password checking, open the door and activate the system alarm.
+
+The project is implemented based on Layered architectured model as follows:
+a) HMI_ECU
+1- Application layer.
+2- HAL: Keypad , LCD.
+3- MCAL: GPIO , UART , Timer1.
+
+b) Control_ECU
+1- Application layer.
+2- HAL: External_EEPROM , DC-Motor , Buzzer.
+3- MCAL: GPIO , UART , Timer0(PWM) , Timer1 , TWI(I2C).
